@@ -20,9 +20,10 @@ module AddMagicComment
     # TODO : add options for recursivity (and application of the script to a single file)
 
 		extensions = {
-			'rb' => '# {text}',
-			'rake' => '# {text}',
-			'haml' => '-# {text}',
+      'rb'   => '# {text}',
+      'erb'  => '# {text}',
+      'rake' => '# {text}',
+      'haml' => '-# {text}',
 		}
 
 		count = 0
