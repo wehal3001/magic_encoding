@@ -8,7 +8,7 @@ module AddMagicComment
   # 1 : Encoding
   # 2 : Path
   # TODO : check that the encoding specified is a valid encoding
-	# TODO : allow use of only one option, so the encoding would be guessed (maybe using `file --mime`?)
+  # TODO : allow use of only one option, so the encoding would be guessed (maybe using `file --mime`?)
   def self.process(options)
 
     # defaults
@@ -19,35 +19,35 @@ module AddMagicComment
 
     # TODO : add options for recursivity (and application of the script to a single file)
 
-		extensions = {
+    extensions = {
       'rb'   => '# {text}',
       'erb'  => '# {text}',
       'rake' => '# {text}',
       'haml' => '-# {text}',
-		}
+    }
 
-		count = 0
-		extensions.each do |ext, comment_style|
-			rbfiles = File.join(directory ,'**', '*.'+ext)
-			Dir.glob(rbfiles).each do |filename|
-				file = File.new(filename, "r+")
+    count = 0
+    extensions.each do |ext, comment_style|
+      rbfiles = File.join(directory ,'**', '*.'+ext)
+      Dir.glob(rbfiles).each do |filename|
+        file = File.new(filename, "r+")
 
-				lines = file.readlines
+        lines = file.readlines
 
-				# remove current encoding comment(s)
+        # remove current encoding comment(s)
         while lines[0].match(/^-?# ?(-\*-)? ?(en)?coding/)
           lines.shift
         end
 
-				# set current encoding
-				lines.insert(0,comment_style.sub('{text}', prefix))
-				count += 1
+        # set current encoding
+        lines.insert(0,comment_style.sub('{text}', prefix))
+        count += 1
 
-				file.pos = 0
-				file.puts(lines.join)
-				file.close
-			end
-		end
+        file.pos = 0
+        file.puts(lines.join)
+        file.close
+      end
+    end
 
     puts "Magic comments set for #{count} source files"
   end
