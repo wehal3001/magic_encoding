@@ -40,7 +40,7 @@ module AddMagicComment
         end
 
         # remove empty line(s) from top
-        while lines[0].strip.blank?
+        while lines[0].strip.empty?
           lines.shift
         end
 
