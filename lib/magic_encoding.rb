@@ -34,12 +34,17 @@ module AddMagicComment
 
         lines = file.readlines
 
-        # remove current encoding comment(s)
+        # remove current encoding comment(s) from top
         while lines[0].match(/^-?# ?(-\*-)? ?(en)?coding/)
           lines.shift
         end
 
-        # set current encoding
+        # remove empty line(s) from top
+        while lines[0].strip.blank?
+          lines.shift
+        end
+
+        # add current encoding to top
         lines.insert(0,comment_style.sub('{text}', prefix))
         count += 1
 
